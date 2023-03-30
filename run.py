@@ -47,3 +47,9 @@ for gpu in gpus:
 model_config_path =  f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config'        # Store the path of config file
 checkpoint_model_path   =  f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/checkpoint/ckpt-0'      # Store the path of model
 label_map_path    =  f'data/mscoco_label_map.pbtxt'                             # Store the path of label_map 
+
+
+# Load pipeline config and build a detection model
+configs = config_util.get_configs_from_pipeline_file(model_config_path)
+model_config = configs['model']
+detection_model = model_builder.build(model_config=model_config, is_training=False)

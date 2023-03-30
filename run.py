@@ -43,3 +43,7 @@ def talk_function(text):               # Text to speech convertion
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
+
+model_config_path =  f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config'        # Store the path of config file
+checkpoint_model_path   =  f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/checkpoint/ckpt-0'      # Store the path of model
+label_map_path    =  f'data/mscoco_label_map.pbtxt'                             # Store the path of label_map 

@@ -21,4 +21,7 @@ engine.setProperty('voice', en_voice_id)
 rate = engine.getProperty('rate')
 engine.setProperty('rate', rate - 25)
 
-#Comment 3
+def talk_function(text):               # Text to speech convertion
+    print("Computer: {}".format(text))
+    engine.say(text)
+    engine.runAndWait()

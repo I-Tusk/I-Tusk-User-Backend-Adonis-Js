@@ -53,3 +53,7 @@ label_map_path    =  f'data/mscoco_label_map.pbtxt'                             
 configs = config_util.get_configs_from_pipeline_file(model_config_path)
 model_config = configs['model']
 detection_model = model_builder.build(model_config=model_config, is_training=False)
+
+# Restore checkpoint
+ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
+ckpt.restore(checkpoint_model_path).expect_partial()

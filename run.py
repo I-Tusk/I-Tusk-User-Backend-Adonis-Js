@@ -57,3 +57,14 @@ detection_model = model_builder.build(model_config=model_config, is_training=Fal
 # Restore checkpoint
 ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
 ckpt.restore(checkpoint_model_path).expect_partial()
+
+@tf.function
+
+def detect_fn(image):
+    """Detect objects in image."""
+
+    image, shapes = detection_model.preprocess(image)
+    prediction_dict = detection_model.predict(image, shapes)
+    detections = detection_model.postprocess(prediction_dict, shapes)
+
+    return detections, prediction_dict, tf.reshape(shapes, [-1])

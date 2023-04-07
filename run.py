@@ -95,8 +95,10 @@ def detect_fn(image):
 label_id_offset = 1
 image_np_with_detections = image_np.copy()
 
+# Set the minimum score threshold for detections
 min_score_thresh = 0.50
 
+# Create two dictionaries to map the boxes with their respective display strings and colors
 box_to_display_str_map = collections.defaultdict(list)
 box_to_color_map = collections.defaultdict(str)
 

@@ -69,4 +69,7 @@ def detect_fn(image):
 
     return detections, prediction_dict, tf.reshape(shapes, [-1])
 
+    category_index = label_map_util.create_category_index_from_labelmap(label_map_path,
+                                                                    use_display_name=True)
+
     cap = cv2.VideoCapture("test-video.m4v")

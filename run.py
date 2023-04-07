@@ -73,3 +73,10 @@ def detect_fn(image):
                                                                     use_display_name=True)
 
     cap = cv2.VideoCapture("test-video.m4v")
+
+    while True:
+    # Read frame from camera
+    ret, image_np = cap.read()
+
+    # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
+    image_np_expanded = np.expand_dims(image_np, axis=0)

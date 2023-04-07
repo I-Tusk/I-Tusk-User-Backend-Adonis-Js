@@ -84,3 +84,7 @@ def detect_fn(image):
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
 
      detections, predictions_dict, shapes = detect_fn(input_tensor)
+
+
+label_id_offset = 1
+    image_np_with_detections = image_np.copy()

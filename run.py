@@ -82,3 +82,5 @@ def detect_fn(image):
     image_np_expanded = np.expand_dims(image_np, axis=0)
 
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+
+     detections, predictions_dict, shapes = detect_fn(input_tensor)

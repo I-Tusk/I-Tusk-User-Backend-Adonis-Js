@@ -31,35 +31,40 @@ engine.setProperty('voice', en_voice_id)
 rate = engine.getProperty('rate')
 engine.setProperty('rate', rate - 25)
 
-#Comment 3
+# Comment 3
+
+
 def talk_function(text):               # Text to speech convertion
     print("Computer: {}".format(text))
     engine.say(text)
     engine.runAndWait()
 
-    
 
 # Enable GPU dynamic memory allocation
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
 
-model_config_path =  f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config'        # Store the path of config file
-checkpoint_model_path   =  f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/checkpoint/ckpt-0'      # Store the path of model
-label_map_path    =  f'data/mscoco_label_map.pbtxt'                             # Store the path of label_map 
+# Store the path of config file
+model_config_path = f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config'
+# Store the path of model
+checkpoint_model_path = f'data/models/ssd_mobilenet_v2_320x320_coco17_tpu-8/checkpoint/ckpt-0'
+# Store the path of label_map
+label_map_path = f'data/mscoco_label_map.pbtxt'
 
 
 # Load pipeline config and build a detection model
 configs = config_util.get_configs_from_pipeline_file(model_config_path)
 model_config = configs['model']
-detection_model = model_builder.build(model_config=model_config, is_training=False)
+detection_model = model_builder.build(
+    model_config=model_config, is_training=False)
 
 # Restore checkpoint
 ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
 ckpt.restore(checkpoint_model_path).expect_partial()
 
-@tf.function
 
+@tf.function
 def detect_fn(image):
     """Detect objects in image."""
 
@@ -81,10 +86,36 @@ def detect_fn(image):
     # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
     image_np_expanded = np.expand_dims(image_np, axis=0)
 
-    input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+    input_tensor = tf.convert_to_tensor(
+        np.expand_dims(image_np, 0), dtype=tf.float32)
 
      detections, predictions_dict, shapes = detect_fn(input_tensor)
 
 
 label_id_offset = 1
     image_np_with_detections = image_np.copy()
+
+min_score_thresh = 0.50
+
+box_to_display_str_map = collections.defaultdict(list)
+    box_to_color_map = collections.defaultdict(str)
+
+number_of_items = 0
+
+for i in range(detections['detection_boxes'][0].numpy().shape[0]):
+     if detections['detection_scores'][0].numpy() is None or detections['detection_scores'][0].numpy()[i] > min_score_thresh:
+
+         box = tuple(detections['detection_boxes'][0].numpy()[i].tolist())
+
+         display_str = ""
+
+         if (detections['detection_classes'][0].numpy() + label_id_offset).astype(int)[i] in six.viewkeys(category_index):
+                class_name = category_index[(detections['detection_classes'][0].numpy(
+                ) + label_id_offset).astype(int)[i]]['name']
+                display_str = '{}'.format(class_name)
+
+            box_to_display_str_map[box].append(display_str) #this joins the number elements in the list with an appropriate space label name
+         
+
+
+         

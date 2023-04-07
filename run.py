@@ -144,3 +144,7 @@ for box, color in box_to_display_str_map.items():
 
 # Display output
     cv2.imshow('object detection', cv2.resize(image_np_with_detections, (800, 600)))
+
+
+     if cv2.waitKey(25) & 0xFF == ord('q'):
+        break

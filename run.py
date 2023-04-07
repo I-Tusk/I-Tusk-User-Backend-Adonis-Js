@@ -93,12 +93,12 @@ def detect_fn(image):
 
 
 label_id_offset = 1
-    image_np_with_detections = image_np.copy()
+image_np_with_detections = image_np.copy()
 
 min_score_thresh = 0.50
 
 box_to_display_str_map = collections.defaultdict(list)
-    box_to_color_map = collections.defaultdict(str)
+box_to_color_map = collections.defaultdict(str)
 
 number_of_items = 0
 
@@ -116,12 +116,17 @@ for i in range(detections['detection_boxes'][0].numpy().shape[0]):
 
             box_to_display_str_map[box].append(display_str) #this joins the number elements in the list with an appropriate space label name
          
- im_width, im_height = image_np.shape[1::-1]
+im_width, im_height = image_np.shape[1::-1]
 
- for box, color in box_to_display_str_map.items():
+for box, color in box_to_display_str_map.items():
         ymin, xmin, ymax, xmax = box
 
         ymin = ymin * im_height
         xmin = xmin * im_width
         ymax = ymax * im_height
         xmax = xmax * im_width
+
+        x = xmin
+        y = ymin
+        w = xmax - xmin
+        h = ymax - ymin

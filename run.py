@@ -120,3 +120,8 @@ for i in range(detections['detection_boxes'][0].numpy().shape[0]):
 
  for box, color in box_to_display_str_map.items():
         ymin, xmin, ymax, xmax = box
+
+        ymin = ymin * im_height
+        xmin = xmin * im_width
+        ymax = ymax * im_height
+        xmax = xmax * im_width

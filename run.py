@@ -116,6 +116,7 @@ for i in range(detections['detection_boxes'][0].numpy().shape[0]):
 
             box_to_display_str_map[box].append(display_str) #this joins the number elements in the list with an appropriate space label name
          
- im_width, im_height = image_np.shape[1::-1] 
+ im_width, im_height = image_np.shape[1::-1]
 
-         
+ for box, color in box_to_display_str_map.items():
+        ymin, xmin, ymax, xmax = box

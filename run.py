@@ -141,3 +141,6 @@ for box, color in box_to_display_str_map.items():
             img = cv2.rectangle(image_np_with_detections, (int(x), int(y) - 30), (int(x) + 20 + tw, int(y)), (0, 0, 255), -1)
 
             img = cv2.putText(image_np_with_detections, box_to_display_str_map[box][0].upper(), (int(x)+5, int(y) - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0), 2)
+
+# Display output
+    cv2.imshow('object detection', cv2.resize(image_np_with_detections, (800, 600)))

@@ -148,3 +148,6 @@ for box, color in box_to_display_str_map.items():
 
      if cv2.waitKey(25) & 0xFF == ord('q'):
         break
+
+        cap.release()
+cv2.destroyAllWindows()

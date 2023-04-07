@@ -132,3 +132,5 @@ for box, color in box_to_display_str_map.items():
         h = ymax - ymin
 
         if box_to_display_str_map[box][0].replace("_"," ") == "elephant": # Get only label name not the total number of items
+
+         cv2.rectangle(image_np_with_detections, (int(x),int(y)), (int(x) + int(w), int(y) + int(h)), (0, 0, 255), 4)

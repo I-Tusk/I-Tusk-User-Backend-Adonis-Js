@@ -102,9 +102,13 @@ min_score_thresh = 0.50
 box_to_display_str_map = collections.defaultdict(list)
 box_to_color_map = collections.defaultdict(str)
 
+# Initialize the number of detected items to 0
 number_of_items = 0
 
+# Loop through all the detected boxes and filter out those below the confidence threshold
 for i in range(detections['detection_boxes'][0].numpy().shape[0]):
+
+      # If detection score is below the threshold, skip the current box
      if detections['detection_scores'][0].numpy() is None or detections['detection_scores'][0].numpy()[i] > min_score_thresh:
 
          box = tuple(detections['detection_boxes'][0].numpy()[i].tolist())
